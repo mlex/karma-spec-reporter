@@ -133,6 +133,7 @@ var SpecReporter = function (baseReporterDecorator, formatError, config) {
       this.currentSuite = suite;
 
       var specName = result.description;
+      var browserName = reporterCfg.showBrowser ? ' [' + browser.name + ']' : '';
       var elapsedTime = reporterCfg.showSpecTiming ? ' (' + result.time + 'ms)' : '';
 
       if (this.reportSlowerThan && result.time > config.reportSlowerThan) {
@@ -144,7 +145,7 @@ var SpecReporter = function (baseReporterDecorator, formatError, config) {
         else if (!result.success) specName = specName.red;
       }
 
-      var msg = indent + status + specName + elapsedTime;
+      var msg = indent + status + specName + browserName + elapsedTime;
 
       result.log.forEach(function (log) {
         if (reporterCfg.maxLogLines) {
@@ -196,6 +197,7 @@ var SpecReporter = function (baseReporterDecorator, formatError, config) {
   this.specFailure = reporterCfg.suppressFailed ? noop : this.onSpecFailure;
   this.suppressErrorSummary = reporterCfg.suppressErrorSummary || false;
   this.showSpecTiming = reporterCfg.showSpecTiming || false;
+  this.showBrowser = reporterCfg.showBrowser || false;
   this.reportSlowerThan = config.reportSlowerThan || false;
 };
 
